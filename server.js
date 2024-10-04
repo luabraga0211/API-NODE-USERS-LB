@@ -61,13 +61,13 @@ server.delete('/users/:id', async (request, reply) => {
     const userID = request.params.id;
     if (userID) {
         await databasePostgres.deleteUser(userID);
-        return reply.status(204).send(Usuario Deletado);
+        return reply.status(204).send('Usuario Deletado');
     } else {
         return reply.status(400).send('Faltou o ID');
     }
 
 
-    
+
 })
 
 
