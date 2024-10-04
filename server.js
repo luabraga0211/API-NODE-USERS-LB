@@ -27,8 +27,11 @@ server.post('/users', async (request, reply) => {
     if (!body.profile) {
         error.profile = 'Perfil ausente'
     }
+    if (!userID) {
+        error.userID = 'faltou o ID'
+    }
 
-    if (body.name && body.password && body.profile) {
+    if (body.name && body.password && body.profile && userID) {
         await databasePostgres.createUser(body);
         return reply.status(201).send('A criação foi bem sucedida');
     }
@@ -56,9 +59,15 @@ server.put('/users/:id', async (request, reply) => {
 // DELETE
 server.delete('/users/:id', async (request, reply) => {
     const userID = request.params.id;
-    await databasePostgres.deleteUser(userID);
+    if (userID) {
+        await databasePostgres.deleteUser(userID);
+        return reply.status(204).send(Usuario Deletado);
+    } else {
+        return reply.status(400).send('Faltou o ID');
+    }
 
-    return reply.status(204).send();
+
+    
 })
 
 
